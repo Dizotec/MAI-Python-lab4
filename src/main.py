@@ -15,6 +15,6 @@ def main() -> None:
     print(result)
 
     print(SAMPLE_CONSTANT)
-
+    print("init")
 if __name__ == "__main__":
     main()
