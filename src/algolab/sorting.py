@@ -1,42 +1,54 @@
-def quadratic(els:list)->list:
-    els_copy = els.copy() 
-    for i in range(len(els_copy)-1):
-        for j in range(len(els_copy)-1-i):
-            if els_copy[j] > els_copy[j+1] :
-                tmp = els_copy[j]
-                els_copy[j] = els_copy[j+1]
-                els_copy[j+1] = tmp
-    
-    return els_copy 
 
-def merge(left:list,right:list)->list:
-    result = [] 
-    i = 0 
-    j = 0 
+from typing import Any
+
+
+def _check_list(els: list[Any]) -> None:
+    if not isinstance(els, list):
+        raise TypeError("Ожидается список")
+
+
+def quadratic(els: list[Any], *, reverse: bool = False) -> list[Any]:
+    _check_list(els)
+    result = els.copy()
+    for end in range(len(result) - 1, 0, -1):
+        for j in range(end):
+            left, right = result[j], result[j + 1]
+            swap = left < right if reverse else right < left
+            if swap:
+                result[j], result[j + 1] = right, left
+    return result
+
+
+def merge(left: list[Any], right: list[Any], *, reverse: bool = False) -> list[Any]:
+    result = []
+    i = j = 0
     while i < len(left) and j < len(right):
-        if left[i] <= right[j]:
-            result.append(left[i])
-            i+=1
-        else:
+        take_right = left[i] < right[j] if reverse else right[j] < left[i]
+        if take_right:
             result.append(right[j])
-            j+=1
+            j += 1
+        else:
+            result.append(left[i])
+            i += 1
     result.extend(left[i:])
     result.extend(right[j:])
-    return result 
-        
-def effective(els:list)->list:
-    els_copy = els.copy() 
-    mid = len (els ) // 2
-    if len(els_copy) <= 1 :
-        return els_copy
-    left = effective(els[:mid])
-    right = effective(els[mid:])
-    return merge(left, right)
+    return result
 
 
-def sorting(method : str , els: list) -> list:
-    
-    if method == '--quadratic':
-        return quadratic(els)
-    if method == '--effective':
-        return effective(els)
+def effective(els: list[Any], *, reverse: bool = False) -> list[Any]:
+    _check_list(els)
+    if len(els) < 2:
+        return els.copy()
+    mid = len(els) // 2
+    left = effective(els[:mid], reverse=reverse)
+    right = effective(els[mid:], reverse=reverse)
+    return merge(left, right, reverse=reverse)
+
+
+def sorting(method: str, els: list[Any], *, reverse: bool = False) -> list[Any]:
+    """Выбирает алгоритм и направление сортировки."""
+    if method == "--quadratic":
+        return quadratic(els, reverse=reverse)
+    if method == "--effective":
+        return effective(els, reverse=reverse)
+    raise ValueError(f"Неизвестный метод сортировки {method!r}")

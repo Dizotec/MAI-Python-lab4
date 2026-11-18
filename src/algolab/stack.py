@@ -1,23 +1,27 @@
-from typing import Any 
+from typing import Any
 
-class Stack():
-    def __init__(self)->None:
-        self.items = []
-    def push(self,item: Any )->Any:
+
+class Stack:
+    def __init__(self) -> None:
+        self.items: list[Any] = []
+
+    def push(self, item: Any) -> None:
         self.items.append(item)
-    def pop(self)-> Any:
-        
-        last_item = self.items.pop()
-        return  last_item 
-    def peek(self)->Any:
-        last_item = self.items[-1]
-        return  last_item 
-    def __len__(self)->int:
+
+    def pop(self) -> Any:
+        return self.items.pop()
+
+    def peek(self) -> Any:
+        return self.items[-1]
+
+    def __len__(self) -> int:
         return len(self.items)
-    def is_exist(self)->bool:
+
+    def is_exist(self) -> bool:
         return bool(self.items)
+
+
 def demo_stack() -> None:
-    # пример 
     stack = Stack()
     print(f"Пустой стек: len={len(stack)}, bool={bool(stack)}")
 
