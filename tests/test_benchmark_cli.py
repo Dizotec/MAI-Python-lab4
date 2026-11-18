@@ -63,6 +63,32 @@ class InterfaceTests(unittest.TestCase):
             result = self.command("sorting", method, "--reverse", "-2", "2", "1")
             self.assertEqual(result.strip(), "[2, 1, -2]")
 
+    def test_help_for_every_command(self):
+        commands = (
+            ((), "generate"),
+            (("sorting",), "--effective"),
+            (("recurrent",), "--recur"),
+            (("struct",), "стека"),
+            (("generate",), "--kind"),
+            (("benchmark",), "{sorting,recurrent}"),
+            (("benchmark", "sorting"), "--sizes"),
+            (("benchmark", "sorting", "--effective"), "--quadratic"),
+            (("benchmark", "recurrent"), "--iter"),
+        )
+        for command, expected in commands:
+            for flag in ("-h", "--help"):
+                with self.subTest(command=command, flag=flag):
+                    out = io.StringIO()
+                    err = io.StringIO()
+                    with patch("sys.argv", ["algolab", *command, flag]), redirect_stdout(out), redirect_stderr(err):
+                        try:
+                            main()
+                        except SystemExit as error:
+                            self.assertEqual(error.code, 0)
+                    self.assertEqual(err.getvalue(), "")
+                    self.assertIn("usage:", out.getvalue())
+                    self.assertIn(expected, out.getvalue())
+
     def test_report_via_cli(self):
         with patch.object(benchmark, "perf_counter", return_value=0):
             result = self.command("benchmark", "sorting", "--sizes", "4", "--seed", "3")
