@@ -15,8 +15,8 @@ def recur(value:int , degree:int ) -> int:
     else:
         return recur(value,degree-1) * value
 
-def recurrent(type:str, value: int , degree: int ) -> int:
-    if type == '--iter':
+def recurrent(method:str, value: int , degree: int ) -> int:
+    if method == '--iter':
         return iter(value,degree)
-    elif type == '--recur':
+    elif method == '--recur':
         return recur(value,degree)
