@@ -1,4 +1,4 @@
-def quadratic(els:list):
+def quadratic(els:list)->list:
     els_copy = els.copy() 
     for i in range(len(els_copy)-1):
         for j in range(len(els_copy)-1-i):
@@ -9,7 +9,7 @@ def quadratic(els:list):
     
     return els_copy 
 
-def merge(left,right):
+def merge(left:list,right:list)->list:
     result = [] 
     i = 0 
     j = 0 
@@ -24,7 +24,7 @@ def merge(left,right):
     result.extend(right[j:])
     return result 
         
-def effective(els:list):
+def effective(els:list)->list:
     els_copy = els.copy() 
     mid = len (els ) // 2
     if len(els_copy) <= 1 :
@@ -34,7 +34,7 @@ def effective(els:list):
     return merge(left, right)
 
 
-def sorting(method : str , els: list):
+def sorting(method : str , els: list) -> list:
     
     if method == '--quadratic':
         return quadratic(els)
