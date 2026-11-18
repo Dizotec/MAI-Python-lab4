@@ -46,7 +46,6 @@ def effective(els: list[Any], *, reverse: bool = False) -> list[Any]:
 
 
 def sorting(method: str, els: list[Any], *, reverse: bool = False) -> list[Any]:
-    """Выбирает алгоритм и направление сортировки."""
     if method == "--quadratic":
         return quadratic(els, reverse=reverse)
     if method == "--effective":

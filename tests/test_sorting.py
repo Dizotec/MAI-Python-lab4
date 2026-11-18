@@ -12,7 +12,6 @@ class Record:
     name: str
 
     def __lt__(self, other: "Record") -> bool:
-        """Порядок определяется только приоритетом, имя различает записи."""
         return self.priority < other.priority
 
 

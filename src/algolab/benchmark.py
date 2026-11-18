@@ -26,7 +26,6 @@ def benchmark_recurn_iter(args: Sequence[str]) -> float:
 
 
 def benchmark_recurn_recur(args: Sequence[str]) -> float:
-    """Измеряет рекурсивную степень."""
     return _measure_power(recur, args)
 
 
