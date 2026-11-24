@@ -42,10 +42,7 @@ def _print_command_help(command: list[str]) -> None:
         parser.add_argument("числа", nargs="*", help="Целые числа через пробел.")
     elif command in (["recurrent"], ["benchmark", "recurrent"]):
         benchmark_help = command[0] == "benchmark"
-        parser.description = (
-            "Измерить время вычисления степени. Без флага сравниваются оба метода."
-            if benchmark_help else "Вычислить степень целого числа."
-        )
+        parser.description = ("Измерить время вычисления степени. Без флага сравниваются оба метода." if benchmark_help else "Вычислить степень целого числа." )
         methods = parser.add_mutually_exclusive_group(required=not benchmark_help)
         methods.add_argument("--iter", action="store_true", help="Итеративный метод.")
         methods.add_argument("--recur", action="store_true", help="Рекурсивный метод.")
